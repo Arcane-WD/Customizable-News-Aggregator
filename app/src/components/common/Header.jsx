@@ -1,12 +1,14 @@
 import React from "react";
-
+import userPhoto from "../../assests/images/blob.jpg"
 export default function Header() {
-    <header>
-        <ul>
-            <li><a href="">Home</a></li>
-            <li><a href="">News</a>Footer</li>
-            <li><a href=""></a>Trending</li>
-            <li><a href="">Profile</a></li>
-        </ul>
-    </header>
+    return(
+        <header className="header">
+            <a href="">Home</a>
+            <a href="">News</a>
+            <a href="">Trending</a>
+            <div className="profile"style={{}}>
+                <a href="">Profile<button className="userphoto"><img src={userPhoto} alt="user image" /></button></a>
+            </div>
+        </header>
+    )
 }
