@@ -1,15 +1,15 @@
-import { useState } from 'react'
 import './App.css'
-import DarkMode from './components/DarkMode'
-import Header from './components/common/Header'
-
+import MainNewsPage from './components/pages/MainNewsPage'
+import SignupPage from './components/pages/SignupPage'
+import PreferencesPage from './components/pages/PreferencesPage'
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
     {/* <DarkMode/> */}
-    <Header/>
+    <SignupPage/>
+    <MainNewsPage/>
+    <PreferencesPage/>
     </>
   )
 }
