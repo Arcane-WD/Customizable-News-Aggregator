@@ -3,6 +3,29 @@ import { FaGoogle, FaFacebook, FaLinkedin } from "react-icons/fa"; // Import ico
 
 export default function SignupPage() {
   const [isRightPanelActive, setRightPanelActive] = useState(false);
+
+  // Simulated OAuth functions for demonstration purposes
+  const handleGoogleLogin = () => {
+    console.log("Signing in with Google...");
+    // Replace this with actual Google OAuth logic
+    const redirectUrl = "https://www.youtube.com/watch?v=xvFZjo5PgG0"; // Example redirect URL
+    window.open(redirectUrl, "_blank"); // Open in a new tab // Example redirect URL
+  };
+
+  const handleFacebookLogin = () => {
+    console.log("Signing in with Facebook...");
+    // Replace this with actual Facebook OAuth logic
+    const redirectUrl = "https://www.youtube.com/watch?v=xvFZjo5PgG0"; // Example redirect URL
+    window.open(redirectUrl, "_blank"); // Open in a new tab
+  };
+
+  const handleLinkedInLogin = () => {
+    console.log("Signing in with LinkedIn...");
+    // Replace this with actual LinkedIn OAuth logic
+    const redirectUrl = "https://www.youtube.com/watch?v=xvFZjo5PgG0"; // Example redirect URL
+    window.open(redirectUrl, "_blank"); // Open in a new tab // Example redirect URL
+  };
+
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div
@@ -20,15 +43,24 @@ export default function SignupPage() {
             <h1 className="text-2xl font-bold">Create Account</h1>
             <div className="flex space-x-3 my-4">
               {/* Facebook Button */}
-              <button className="p-2 border rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+              <button
+                onClick={handleFacebookLogin}
+                className="p-2 border rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              >
                 <FaFacebook size={24} />
               </button>
               {/* Google Button */}
-              <button className="p-2 border rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors">
+              <button
+                onClick={handleGoogleLogin}
+                className="p-2 border rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
+              >
                 <FaGoogle size={24} />
               </button>
               {/* LinkedIn Button */}
-              <button className="p-2 border rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors">
+              <button
+                onClick={handleLinkedInLogin}
+                className="p-2 border rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors"
+              >
                 <FaLinkedin size={24} />
               </button>
             </div>
@@ -46,15 +78,24 @@ export default function SignupPage() {
             <h1 className="text-2xl font-bold">Sign In</h1>
             <div className="flex space-x-3 my-4">
               {/* Facebook Button */}
-              <button className="p-2 border rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+              <button
+                onClick={handleFacebookLogin}
+                className="p-2 border rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              >
                 <FaFacebook size={24} />
               </button>
               {/* Google Button */}
-              <button className="p-2 border rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors">
+              <button
+                onClick={handleGoogleLogin}
+                className="p-2 border rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
+              >
                 <FaGoogle size={24} />
               </button>
               {/* LinkedIn Button */}
-              <button className="p-2 border rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors">
+              <button
+                onClick={handleLinkedInLogin}
+                className="p-2 border rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors"
+              >
                 <FaLinkedin size={24} />
               </button>
             </div>
