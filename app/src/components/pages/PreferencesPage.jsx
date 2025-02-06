@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 const NewsGenreSelection = () => {
   const [selectedGenres, setSelectedGenres] = useState([]);
-
   const genres = [
     "Technology", "Sports", "Politics", "Entertainment", 
     "Health", "Science", "Business", "Travel", "Lifestyle", 
@@ -12,9 +11,11 @@ const NewsGenreSelection = () => {
   const toggleSelection = (genre) => {
     setSelectedGenres((prevGenres) => {
       if (prevGenres.includes(genre)) {
-        return prevGenres.filter(item => item !== genre);  // Remove genre
+        console.log(`Deselected: ${genre}`); // Log deselection
+        return prevGenres.filter(item => item !== genre); // Remove genre
       } else {
-        return [...prevGenres, genre];  // Add genre
+        console.log(`Selected: ${genre}`); // Log selection
+        return [...prevGenres, genre]; // Add genre
       }
     });
   };
@@ -23,7 +24,7 @@ const NewsGenreSelection = () => {
     if (selectedGenres.length > 0) {
       alert("You selected the following genres: " + selectedGenres.join(", "));
       // Redirect to homepage (adjust the URL to your home page)
-      window.location.href = "/home";  // Adjust the URL as needed
+      window.location.href = "/home"; // Adjust the URL as needed
     } else {
       alert("Please select at least one genre before proceeding.");
     }
