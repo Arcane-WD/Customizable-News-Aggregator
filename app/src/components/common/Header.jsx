@@ -22,17 +22,16 @@
 //     </nav>
 //   );
 // }
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
     <nav className="navbar">
       <div className="logo">NewsApp</div>
       <ul className="nav-links">
-        <li><NavLink to="/" className={({ isActive }) => isActive ? "active" : ""}>Home</NavLink></li>
-        <li><NavLink to="/signup" className={({ isActive }) => isActive ? "active" : ""}>Signup</NavLink></li>
-        <li><NavLink to="/preferences" className={({ isActive }) => isActive ? "active" : ""}>Preferences</NavLink></li>
-        <li><NavLink to="/article" className={({ isActive }) => isActive ? "active" : ""}>Article</NavLink></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/signup">Signup</Link></li>
+        <li><Link to="/preferences">Preferences</Link></li>
       </ul>
     </nav>
   );
