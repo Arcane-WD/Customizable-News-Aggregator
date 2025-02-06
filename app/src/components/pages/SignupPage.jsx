@@ -1,8 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { FaGoogle, FaFacebook, FaLinkedin } from "react-icons/fa"; // Import icons
 
 export default function SignupPage() {
   const [isRightPanelActive, setRightPanelActive] = useState(false);
-
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div
@@ -19,9 +19,18 @@ export default function SignupPage() {
           <form className="text-center p-10">
             <h1 className="text-2xl font-bold">Create Account</h1>
             <div className="flex space-x-3 my-4">
-              <button className="p-2 border rounded-full">F</button>
-              <button className="p-2 border rounded-full">G</button>
-              <button className="p-2 border rounded-full">L</button>
+              {/* Facebook Button */}
+              <button className="p-2 border rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                <FaFacebook size={24} />
+              </button>
+              {/* Google Button */}
+              <button className="p-2 border rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors">
+                <FaGoogle size={24} />
+              </button>
+              {/* LinkedIn Button */}
+              <button className="p-2 border rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors">
+                <FaLinkedin size={24} />
+              </button>
             </div>
             <span className="text-sm">or use your email for registration</span>
             <input type="text" placeholder="Name" className="w-full p-2 my-2 border rounded" />
@@ -32,14 +41,22 @@ export default function SignupPage() {
         </div>
 
         {/* Sign In Form */}
-    {/* Sign In Form */}
-    <div className={`absolute top-0 w-1/2 h-full flex flex-col items-center justify-center transition-all duration-500`}>
+        <div className={`absolute top-0 w-1/2 h-full flex flex-col items-center justify-center transition-all duration-500`}>
           <form className="text-center p-10">
             <h1 className="text-2xl font-bold">Sign In</h1>
             <div className="flex space-x-3 my-4">
-              <button className="p-2 border rounded-full">F</button>
-              <button className="p-2 border rounded-full">G</button>
-              <button className="p-2 border rounded-full">L</button>
+              {/* Facebook Button */}
+              <button className="p-2 border rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                <FaFacebook size={24} />
+              </button>
+              {/* Google Button */}
+              <button className="p-2 border rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors">
+                <FaGoogle size={24} />
+              </button>
+              {/* LinkedIn Button */}
+              <button className="p-2 border rounded-full bg-blue-800 text-white hover:bg-blue-900 transition-colors">
+                <FaLinkedin size={24} />
+              </button>
             </div>
             <span className="text-sm">or use your account</span>
             <input type="email" placeholder="Email" className="w-full p-2 my-2 border rounded" />
