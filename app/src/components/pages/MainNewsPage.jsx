@@ -4,7 +4,6 @@ import newsImage from "../../assests/images/download.jpg";
 export default function MainNewsPage() {
   return (
     <>
-      <Header />
       <div className="news-container">
         {/* First News - 60% */}
         <div className="newsDiv first-news">
