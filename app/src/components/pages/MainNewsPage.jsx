@@ -1,118 +1,208 @@
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import newsImage from "../../assests/images/download.jpg";
-import NewsArticlePage from "./NewsArticlepage";
+
 export default function MainNewsPage() {
+  const [newsData, setNewsData] = useState([]);
+
+  useEffect(() => {
+    // Fetch news data from the API
+    const fetchNews = async () => {
+      const apiKey = "408d10cee8cc43fbb7f93fd98356dde7"; // Replace with your News API key
+      const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setNewsData(data.articles); // Store the fetched articles
+      } catch (error) {
+        console.error("Error fetching news data:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
+
   return (
     <>
       <div className="news-container">
-        {/* First News */}
-        <Link to="/news/1" className="newsDiv first-news">
-          <div className="news-content">
-            <h3>This is the heading of the main news page</h3>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Pariatur nostrum error aliquid dignissimos quos ipsum odit
-              possimus quae mollitia et necessitatibus vitae quibusdam aperiam
-              fuga repellendus, totam enim dolor. Cumque.
-            </p>
-          </div>
-          <img src={newsImage} alt="newsImage" className="news-img" />
-        </Link>
-
-        {/* Second News */}
-        <Link to={NewsArticlePage} className="newsDiv second-news">
-          <div className="news-content">
-            <h3>This is the heading of the main news page</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-          </div>
-          <img src={newsImage} alt="newsImage" className="news-img" />
-        </Link>
+        {newsData.slice(0, 2).map((article, index) => ( // Render first two articles
+          <Link
+            to={`/news/${index}`} // Use index or article ID as the route parameter
+            state={{ article }} // Pass the article data as state
+            key={index}
+            className={`newsDiv news-${index + 1}`}
+          >
+            <div className="news-content">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </div>
+            <img
+              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+              alt="newsImage"
+              className="news-img"
+            />
+          </Link>
+        ))}
       </div>
 
       <div className="news-container">
-        {/* Third News */}
-        <Link to="/news/3" className="newsDiv third-news">
-          <div className="news-content">
-            <h3>This is the heading of the main news page</h3>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
-          </div>
-          <img src={newsImage} alt="newsImage" className="news-img" />
-        </Link>
+        {newsData.slice(2, 4).map((article, index) => ( // Render next two articles
+          <Link
+            to={`/news/${index + 2}`} // Use index + 2 to maintain unique IDs
+            state={{ article }} // Pass the article data as state
+            key={index + 2}
+            className={`newsDiv news-${index + 3}`}
+          >
+            <div className="news-content">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </div>
+            <img
+              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+              alt="newsImage"
+              className="news-img"
+            />
+          </Link>
+        ))}
+      </div>
 
-        {/* Fourth News */}
-        <Link to="/news/4" className="newsDiv fourth-news">
-          <div className="news-content">
-            <h3>This is the heading of the main news page</h3>
-            <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Pariatur nostrum error aliquid dignissimos quos ipsum odit
-              possimus quae mollitia et necessitatibus vitae quibusdam aperiam
-              fuga repellendus, totam enim dolor. Cumque.
-            </p>
-          </div>
-          <img src={newsImage} alt="newsImage" className="news-img" />
-        </Link>
+      <div className="news-container">
+        {newsData.slice(4, 6).map((article, index) => ( // Render first two articles
+          <Link
+            to={`/news/${index}`} // Use index or article ID as the route parameter
+            state={{ article }} // Pass the article data as state
+            key={index}
+            className={`newsDiv news-${index + 1}`}
+          >
+            <div className="news-content">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </div>
+            <img
+              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+              alt="newsImage"
+              className="news-img"
+            />
+          </Link>
+        ))}
+      </div>
+
+      <div className="news-container">
+        {newsData.slice(6, 8).map((article, index) => ( // Render first two articles
+          <Link
+            to={`/news/${index}`} // Use index or article ID as the route parameter
+            state={{ article }} // Pass the article data as state
+            key={index}
+            className={`newsDiv news-${index + 1}`}
+          >
+            <div className="news-content">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </div>
+            <img
+              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+              alt="newsImage"
+              className="news-img"
+            />
+          </Link>
+        ))}
+      </div>
+
+      <div className="news-container">
+        {newsData.slice(8, 10).map((article, index) => ( // Render first two articles
+          <Link
+            to={`/news/${index}`} // Use index or article ID as the route parameter
+            state={{ article }} // Pass the article data as state
+            key={index}
+            className={`newsDiv news-${index + 1}`}
+          >
+            <div className="news-content">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </div>
+            <img
+              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+              alt="newsImage"
+              className="news-img"
+            />
+          </Link>
+        ))}
+      </div>
+
+      <div className="news-container">
+        {newsData.slice(10, 12).map((article, index) => ( // Render first two articles
+          <Link
+            to={`/news/${index}`} // Use index or article ID as the route parameter
+            state={{ article }} // Pass the article data as state
+            key={index}
+            className={`newsDiv news-${index + 1}`}
+          >
+            <div className="news-content">
+              <h3>{article.title}</h3>
+              <p>{article.description}</p>
+            </div>
+            <img
+              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+              alt="newsImage"
+              className="news-img"
+            />
+          </Link>
+        ))}
       </div>
     </>
   );
 }
-// import { useState, useEffect } from "react";
+
+
+
 // import { Link } from "react-router-dom";
-// import Skeleton from "react-loading-skeleton";
-// import "react-loading-skeleton/dist/skeleton.css";
+// import React, { useEffect, useState } from "react";
+// import newsImage from "../../assests/images/download.jpg";
 
 // export default function MainNewsPage() {
-//   const [news, setNews] = useState([]); // To store news data
-//   const [loading, setLoading] = useState(true); // To track loading state
+//   const [newsData, setNewsData] = useState([]);
 
 //   useEffect(() => {
-//     // Simulate API Call (Replace with actual News API)
-//     setTimeout(() => {
-//       setNews([
-//         {
-//           id: 1,
-//           title: "Breaking News: React is Awesome!",
-//           description: "React makes UI development simple and fun.",
-//           image: "https://via.placeholder.com/300",
-//         },
-//         {
-//           id: 2,
-//           title: "Tech Update: AI is Changing the World",
-//           description: "AI and ML are the future of technology.",
-//           image: "https://via.placeholder.com/300",
-//         },
-//       ]);
-//       setLoading(false);
-//     }, 2000); // Simulating a 2-second API response delay
+//     // Fetch news data from the API
+//     const fetchNews = async () => {
+//       const apiKey = ""; // Replace with your News API key
+//       const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+//       try {
+//         const response = await fetch(url);
+//         const data = await response.json();
+//         if (data.articles) {
+//           setNewsData(data.articles); // Store the fetched articles
+//         }
+//       } catch (error) {
+//         console.error("Error fetching news data:", error);
+//       }
+//     };
+//     fetchNews();
 //   }, []);
 
 //   return (
-//     <div className="news-container">
-//       {loading
-//         ? // Show skeleton loaders when loading
-//           Array(4)
-//             .fill(0)
-//             .map((_, index) => (
-//               <div key={index} className="newsDiv skeleton">
-//                 <Skeleton height={200} />
-//                 <h3>
-//                   <Skeleton width={200} />
-//                 </h3>
-//                 <p>
-//                   <Skeleton count={3} />
-//                 </p>
-//               </div>
-//             ))
-//         : // Show actual news when data is available
-//           news.map((article) => (
-//             <Link to={`/news/${article.id}`} key={article.id} className="newsDiv">
-//               <img src={article.image} alt="news" className="news-img" />
-//               <div className="news-content">
-//                 <h3>{article.title}</h3>
-//                 <p>{article.description}</p>
-//               </div>
-//             </Link>
-//           ))}
-//     </div>
+//     <>
+//       <div className="news-container">
+//         {newsData.slice(0, 20).map((article, index) => ( // Render up to 20 articles
+//           <Link
+//             to={`/news/${index}`} // Use index as the route parameter
+//             state={{ article }} // Pass the article data as state
+//             key={index}
+//             className={`newsDiv news-${index + 1}`}
+//           >
+//             <div className="news-content">
+//               <h3>{article.title}</h3>
+//               <p>{article.description || "No description available."}</p>
+//             </div>
+//             <img
+//               src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
+//               alt="newsImage"
+//               className="news-img"
+//             />
+//           </Link>
+//         ))}
+//       </div>
+//     </>
 //   );
 // }
