@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation,useParams } from "react-router-dom";
 
 export default function NewsArticlePage() {
   const location = useLocation();
+  const { id } = useParams(); // Retrieve the dynamic parameter from the URL
+
+  console.log("Params ID:", id);
+  console.log("Location state:", location.state);
+
+  if (!location.state) {
+    return <h2>Article not found</h2>;
+  }
+
   const { article } = location.state || {};
   const [fullContent, setFullContent] = useState(null);
   const [summary, setSummary] = useState(null);
@@ -14,7 +23,7 @@ export default function NewsArticlePage() {
     } else {
       setFullContent("No URL available to fetch the full article.");
     }
-  }, [article]);
+  }, [article?.url]);
 
   const fetchFullArticle = async (url) => {
     try {

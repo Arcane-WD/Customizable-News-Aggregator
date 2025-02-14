@@ -28,7 +28,7 @@ export default function MainNewsPage() {
       <div className="news-container">
         {newsData.slice(0, 2).map((article, index) => ( // Render first two articles
           <Link
-            to={`/news/${index}`} // Use index or article ID as the route parameter
+            to={`/news/${index}` } // Use index or article ID as the route parameter
             state={{ article }} // Pass the article data as state
             key={index}
             className={`newsDiv news-${index + 1}`}
