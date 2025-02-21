@@ -26,133 +26,152 @@ export default function MainNewsPage() {
   return (
     <>
       <div className="news-container">
-        {newsData.slice(0, 2).map((article, index) => ( // Render first two articles
-          <Link
-            to={`/news/${index}` } // Use index or article ID as the route parameter
-            state={{ article }} // Pass the article data as state
-            key={index}
-            className={`newsDiv news-${index + 1}`}
-          >
-            <div className="news-content">
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-            <img
-              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
-              alt="newsImage"
-              className="news-img"
-            />
-          </Link>
-        ))}
+        {newsData.slice(0, 2).map((article, index) => {
+          const globalIndex = index; // Global index for this slice
+          return (
+            <Link
+              to={`/news/${globalIndex}`} // Using global index
+              state={{ article }}
+              key={globalIndex}
+              className={`newsDiv news-${globalIndex + 1}`}
+            >
+              <div className="news-content">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+              <img
+                src={article.urlToImage || newsImage}
+                alt="newsImage"
+                className="news-img"
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="news-container">
-        {newsData.slice(2, 4).map((article, index) => ( // Render next two articles
-          <Link
-            to={`/news/${index + 2}`} // Use index + 2 to maintain unique IDs
-            state={{ article }} // Pass the article data as state
-            key={index + 2}
-            className={`newsDiv news-${index + 3}`}
-          >
-            <div className="news-content">
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-            <img
-              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
-              alt="newsImage"
-              className="news-img"
-            />
-          </Link>
-        ))}
+        {newsData.slice(2, 4).map((article, index) => {
+          const globalIndex = index + 2; // Adjusted for this slice
+          return (
+            <Link
+              to={`/news/${globalIndex}`} // Using global index
+              state={{ article }}
+              key={globalIndex}
+              className={`newsDiv news-${globalIndex + 1}`}
+            >
+              <div className="news-content">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+              <img
+                src={article.urlToImage || newsImage}
+                alt="newsImage"
+                className="news-img"
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="news-container">
-        {newsData.slice(4, 6).map((article, index) => ( // Render first two articles
-          <Link
-            to={`/news/${index}`} // Use index or article ID as the route parameter
-            state={{ article }} // Pass the article data as state
-            key={index}
-            className={`newsDiv news-${index + 1}`}
-          >
-            <div className="news-content">
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-            <img
-              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
-              alt="newsImage"
-              className="news-img"
-            />
-          </Link>
-        ))}
+        {newsData.slice(4, 6).map((article, index) => {
+          const globalIndex = index + 4; // Adjusted for this slice
+          return (
+            <Link
+              to={`/news/${globalIndex}`} // Using global index
+              state={{ article }}
+              key={globalIndex}
+              className={`newsDiv news-${globalIndex + 1}`}
+            >
+              <div className="news-content">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+              <img
+                src={article.urlToImage || newsImage}
+                alt="newsImage"
+                className="news-img"
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="news-container">
-        {newsData.slice(6, 8).map((article, index) => ( // Render first two articles
-          <Link
-            to={`/news/${index}`} // Use index or article ID as the route parameter
-            state={{ article }} // Pass the article data as state
-            key={index}
-            className={`newsDiv news-${index + 1}`}
-          >
-            <div className="news-content">
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-            <img
-              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
-              alt="newsImage"
-              className="news-img"
-            />
-          </Link>
-        ))}
+        {newsData.slice(6, 8).map((article, index) => {
+          const globalIndex = index + 6; // Adjusted for this slice
+          return (
+            <Link
+              to={`/news/${globalIndex}`} // Using global index
+              state={{ article }}
+              key={globalIndex}
+              className={`newsDiv news-${globalIndex + 1}`}
+            >
+              <div className="news-content">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+              <img
+                src={article.urlToImage || newsImage}
+                alt="newsImage"
+                className="news-img"
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="news-container">
-        {newsData.slice(8, 10).map((article, index) => ( // Render first two articles
-          <Link
-            to={`/news/${index}`} // Use index or article ID as the route parameter
-            state={{ article }} // Pass the article data as state
-            key={index}
-            className={`newsDiv news-${index + 1}`}
-          >
-            <div className="news-content">
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-            <img
-              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
-              alt="newsImage"
-              className="news-img"
-            />
-          </Link>
-        ))}
+        {newsData.slice(8, 10).map((article, index) => {
+          const globalIndex = index + 8; // Adjusted for this slice
+          return (
+            <Link
+              to={`/news/${globalIndex}`} // Using global index
+              state={{ article }}
+              key={globalIndex}
+              className={`newsDiv news-${globalIndex + 1}`}
+            >
+              <div className="news-content">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+              <img
+                src={article.urlToImage || newsImage}
+                alt="newsImage"
+                className="news-img"
+              />
+            </Link>
+          );
+        })}
       </div>
 
       <div className="news-container">
-        {newsData.slice(10, 12).map((article, index) => ( // Render first two articles
-          <Link
-            to={`/news/${index}`} // Use index or article ID as the route parameter
-            state={{ article }} // Pass the article data as state
-            key={index}
-            className={`newsDiv news-${index + 1}`}
-          >
-            <div className="news-content">
-              <h3>{article.title}</h3>
-              <p>{article.description}</p>
-            </div>
-            <img
-              src={article.urlToImage || newsImage} // Fallback to local image if no image is provided
-              alt="newsImage"
-              className="news-img"
-            />
-          </Link>
-        ))}
+        {newsData.slice(10, 12).map((article, index) => {
+          const globalIndex = index + 10; // Adjusted for this slice
+          return (
+            <Link
+              to={`/news/${globalIndex}`} // Using global index
+              state={{ article }}
+              key={globalIndex}
+              className={`newsDiv news-${globalIndex + 1}`}
+            >
+              <div className="news-content">
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+              </div>
+              <img
+                src={article.urlToImage || newsImage}
+                alt="newsImage"
+                className="news-img"
+              />
+            </Link>
+          );
+        })}
       </div>
     </>
   );
 }
+
 
 
 
