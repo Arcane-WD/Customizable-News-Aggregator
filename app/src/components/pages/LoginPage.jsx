@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginSignupPage({ setIsAuthenticated }) {
+  console.log("setIsAuthenticated type:", typeof setIsAuthenticated);
   const navigate = useNavigate();
   const [isSignupMode, setIsSignupMode] = useState(true);
   const [name, setName] = useState("");
@@ -11,25 +12,43 @@ export default function LoginSignupPage({ setIsAuthenticated }) {
 
   const handleSignup = async (event) => {
     event.preventDefault();
+  
+    if (!name || !email || !password) {
+      console.error("All fields are required");
+      return;
+    }
+  
     try {
       const response = await fetch("http://localhost:5000/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, password }),
       });
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("authToken", data.token);
+  
+      const data = await response.json();
+  
+      if (!response.ok) {
+        console.error("Signup failed:", data.message || "Unknown error");
+        return;
+      }
+  
+      console.log("Server response:", data);  // Debugging line
+  
+      localStorage.setItem("authToken", data.token);
+  
+      if (typeof setIsAuthenticated === "function") {
         setIsAuthenticated(true);
         navigate("/mainNews");
       } else {
-        console.error("Signup failed");
+        console.error("setIsAuthenticated is not a function");
       }
     } catch (error) {
       console.error("Signup error:", error);
     }
   };
-
+  
+  
+  
   const handleLogin = async (event) => {
     event.preventDefault();
     try {

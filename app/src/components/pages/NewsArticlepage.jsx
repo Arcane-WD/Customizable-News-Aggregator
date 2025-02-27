@@ -22,7 +22,6 @@ export default function NewsArticlePage() {
   const [fullContent, setFullContent] = useState(null);
   const [summary, setSummary] = useState(null);
   const [isSummarizing, setIsSummarizing] = useState(false);
-
   useEffect(() => {
     console.log("DEBUG: useEffect triggered for fetching full article.");
     if (article?.url) {
@@ -32,33 +31,47 @@ export default function NewsArticlePage() {
       console.error("DEBUG: No URL found in article object.");
       setFullContent("No URL available to fetch the full article.");
     }
-    // Log article details for further debugging
-    console.log("DEBUG: Article details:", article);
   }, [article?.url]);
-
+  
   const fetchFullArticle = async (url) => {
-    console.log("DEBUG: Starting fetch for full article content from:", url);
     try {
-      const response = await fetch(
-        `http://localhost:5000/scrape?url=${encodeURIComponent(url)}`
-      );
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("DEBUG: Error response from server:", errorText);
-        setFullContent("Failed to load the full article content.");
+      const token = localStorage.getItem("authToken");
+  
+      if (!token) {
+        console.error("No token found in localStorage");
         return;
       }
-
+  
+      const response = await fetch(`http://localhost:5000/scrape?url=${encodeURIComponent(url)}`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error Response:", errorData);
+        setFullContent("Failed to fetch full content.");
+        return;
+      }
+  
       const data = await response.json();
-      console.log("DEBUG: Fetched full article data:", data);
-      setFullContent(data.content || "Failed to load the full article content.");
+      console.log("DEBUG: Fetched Data:", data);
+  
+      if (data.content) {
+        setFullContent(data.content);
+      } else {
+        setFullContent("Failed to fetch full content.");
+      }
     } catch (error) {
-      console.error("DEBUG: Error fetching the article:", error);
-      setFullContent("Failed to load the full article content.");
+      console.error("Error fetching full article:", error);
+      setFullContent("Error fetching content.");
     }
   };
-
+  
+  
   const handleSummarize = async () => {
     console.log("DEBUG: Summarize button clicked.");
     if (!fullContent) {
