@@ -12,6 +12,37 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key"; // Replace with 
 
 app.use(cors());
 app.use(express.json());
+// Signup endpoint
+app.post("/signup", (req, res) => {
+  const { name, email, password } = req.body;
+  const existingUser = users.find((u) => u.email === email);
+  if (existingUser) {
+    return res.status(400).json({ error: "User already exists" });
+  }
+
+  const newUser = {
+    id: users.length + 1,
+    name,
+    email,
+    password, // In production, hash the password before storing
+  };
+  users.push(newUser);
+
+  const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: "1h" });
+  res.status(201).json({ token });
+});
+
+// Login endpoint
+app.post("/login", (req, res) => {
+  const { email, password } = req.body;
+  const user = users.find((u) => u.email === email && u.password === password);
+  if (!user) {
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
+  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
+  res.json({ token });
+});
+
 
 // Authentication Middleware
 const authMiddleware = (req, res, next) => {
