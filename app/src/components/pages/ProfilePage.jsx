@@ -2,8 +2,8 @@ import React from "react";
 
 export default function UserProfile() {
   const user = {
-    name: "John Doe",
-    email: "john.doe@example.com",
+    name: localStorage.getItem("userName") || "John Doe",
+    email: localStorage.getItem("userEmail") || "john.doe@example.com",
     bio: "Web Developer | Tech Enthusiast | Blogger",
     profilePicture: "https://via.placeholder.com/150",
   };
