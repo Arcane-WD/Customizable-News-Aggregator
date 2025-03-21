@@ -1,23 +1,5 @@
 [
   {
-    "id": 1,
-    "name": "vbrsjhnr",
-    "email": "123456@gmail.com",
-    "password": "123456@gmail.com"
-  },
-  {
-    "id": 2,
-    "name": "aakif",
-    "email": "abc@gmail.com",
-    "password": "36464674"
-  },
-  {
-    "id": 3,
-    "name": "meer",
-    "email": "ghf@gmail.com",
-    "password": "45745"
-  },
-  {
     "id": 4,
     "name": "hey",
     "email": "ghf12@gmail.com",
@@ -106,5 +88,35 @@
     "name": "sdf",
     "email": "sdf@gmail.com",
     "password": "sdf"
+  },
+  {
+    "id": 19,
+    "name": "Aakif Ahmad Mir",
+    "email": "aakiofficial@gmail.com",
+    "password": "aakif"
+  },
+  {
+    "id": 20,
+    "name": "hey",
+    "email": "hey@gmail.com",
+    "password": "hey"
+  },
+  {
+    "id": 21,
+    "name": "now",
+    "email": "now@gmail.com",
+    "password": "now"
+  },
+  {
+    "id": 19,
+    "name": "hi",
+    "email": "ji@gmail.com",
+    "password": "hey"
+  },
+  {
+    "id": 20,
+    "name": "pro",
+    "email": "pro@gmail.com",
+    "password": "hey"
   }
 ]

@@ -105,48 +105,6 @@ app.post("/login", (req, res) => {
   }
 });
 
-// const users = [];
-
-// // Signup endpoint
-// app.post("/signup", (req, res) => {
-//       console.log("Received data:", req.body); // Debugging line
-
-//   try {
-//     const { name, email, password } = req.body;
-//     const existingUser = users.find((u) => u.email === email);
-//     if (existingUser) {
-//       return res.status(400).json({ error: "User already exists" });
-//     }
-//     const newUser = {
-//       id: users.length + 1,
-//       name,
-//       email,
-//       password, // In production, hash the password before storing
-//     };
-//     users.push(newUser);
-  
-//     const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: "1h" });
-//     res.status(201).json({ token });
-//   }
-//   catch (error) {
-//     console.error("Signup Error:", error);
-//     res.status(500).json({ error: "Internal Server Error" }); // Ensure JSON response
-//   }
-//   });
-
-
-// Login endpoint
-app.post("/login", (req, res) => {
-  const { email, password } = req.body;
-  const user = users.find((u) => u.email === email && u.password === password);
-  if (!user) {
-    return res.status(401).json({ error: "Invalid credentials" });
-  }
-  const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "1h" });
-  res.json({ token });
-});
-
-
 // Authentication Middleware
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;

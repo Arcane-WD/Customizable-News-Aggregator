@@ -29,6 +29,9 @@ node_modules/
 package-lock.json
 dist/
 build/
+backend/node_modules/
+app/node_modules/
+node_modules/
 
 # Python (for Flask backend)
 venv/
@@ -36,7 +39,7 @@ __pycache__/
 *.pyc
 *.pyo
 instance/
-
+myenv
 # Scrap-related files
 scraper_output/
 temp_data/

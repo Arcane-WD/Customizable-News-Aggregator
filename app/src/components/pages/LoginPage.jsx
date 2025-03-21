@@ -37,6 +37,7 @@ export default function LoginSignupPage({ setIsAuthenticated }) {
       const data = await response.json();
 
       if (!response.ok) {
+        alert("User already exists, please try different credentials ");
         console.error("Signup failed:", data.message || "Unknown error");
         return;
       }
@@ -49,11 +50,12 @@ export default function LoginSignupPage({ setIsAuthenticated }) {
 
       if (typeof setIsAuthenticated === "function") {
         setIsAuthenticated(true);
-        navigate("/mainNews");
+        navigate("/preferences");
       } else {
         console.error("setIsAuthenticated is not a function");
       }
     } catch (error) {
+      alert("User already exists");
       console.error("Signup error:", error);
     }
   };
@@ -97,7 +99,7 @@ export default function LoginSignupPage({ setIsAuthenticated }) {
 
       if (typeof setIsAuthenticated === "function") {
         setIsAuthenticated(true);
-        navigate("/mainNews");
+        navigate("/preferences");
       } else {
         console.error("setIsAuthenticated is not a function");
       }

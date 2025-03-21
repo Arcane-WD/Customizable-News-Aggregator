@@ -1,7 +1,11 @@
+import {jwtDecode} from "jwt-decode";
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const NewsGenreSelection = () => {
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const navigate = useNavigate(); 
+
   const genres = [
     "Technology", "Sports", "Politics", "Entertainment", 
     "Health", "Science", "Business", "Travel", "Lifestyle", 
@@ -9,27 +13,32 @@ const NewsGenreSelection = () => {
   ];
 
   const toggleSelection = (genre) => {
-    setSelectedGenres((prevGenres) => {
-      if (prevGenres.includes(genre)) {
-        console.log(`Deselected: ${genre}`); // Log deselection
-        return prevGenres.filter(item => item !== genre); // Remove genre
-      } else {
-        console.log(`Selected: ${genre}`); // Log selection
-        return [...prevGenres, genre]; // Add genre
-      }
-    });
+    setSelectedGenres((prevGenres) => 
+      prevGenres.includes(genre) 
+        ? prevGenres.filter(item => item !== genre) 
+        : [...prevGenres, genre]
+    );
   };
+
 
   const handleDone = () => {
     if (selectedGenres.length > 0) {
       alert("You selected the following genres: " + selectedGenres.join(", "));
-      // Redirect to homepage (adjust the URL to your home page)
-      window.location.href = "/home"; // Adjust the URL as needed
+      
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        const decoded = jwtDecode(token); // Decode token to get user info
+        const userId = decoded.userId || decoded.email; // Use unique user info
+        
+        localStorage.setItem(`hasPreferences_${userId}`, "true"); // Save per user
+      }
+  
+      navigate("/mainNews");
     } else {
       alert("Please select at least one genre before proceeding.");
     }
   };
-
+  
   return (
     <div style={styles.container}>
       <h1>Choose Your Preferred News Genre</h1>
@@ -44,8 +53,6 @@ const NewsGenreSelection = () => {
                 ? 'linear-gradient(45deg, #1d976c, #93f9b9)' 
                 : 'linear-gradient(45deg, #ff416c, #ff4b2b)',
             }}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1)'}
-            onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
           >
             {genre}
           </button>
@@ -62,8 +69,6 @@ const styles = {
     backgroundColor: '#121212',
     color: 'white',
     textAlign: 'center',
-    margin: 0,
-    padding: 0,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -94,8 +99,6 @@ const styles = {
     color: 'white',
     cursor: 'pointer',
     borderRadius: '25px',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
   },
 };
 
