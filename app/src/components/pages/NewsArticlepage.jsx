@@ -181,3 +181,176 @@ export default function NewsArticlePage() {
     </div>
   );
 }
+// import { useEffect, useState } from "react";
+// import { useLocation, useParams } from "react-router-dom";
+// import axios from "axios";
+
+// export default function NewsArticlePage() {
+//   const location = useLocation();
+//   const { id } = useParams();
+
+//   if (!location.state) {
+//     return <h2>Article not found</h2>;
+//   }
+
+//   const { article, allArticles } = location.state || {};
+//   if (!article) {
+//     return <div>Article not found!</div>;
+//   }
+
+//   const [fullContent, setFullContent] = useState(null);
+//   const [summary, setSummary] = useState(null);
+//   const [isSummarizing, setIsSummarizing] = useState(false);
+//   const [recommendations, setRecommendations] = useState([]);
+
+//   useEffect(() => {
+//     if (article?.url) {
+//       fetchFullArticle(article.url);
+//     } else {
+//       setFullContent("No URL available to fetch the full article.");
+//     }
+//   }, [article?.url]);
+
+//   const fetchFullArticle = async (url) => {
+//     try {
+//       const token = localStorage.getItem("authToken");
+
+//       if (!token) {
+//         return;
+//       }
+
+//       const response = await fetch(`http://localhost:5000/scrape?url=${encodeURIComponent(url)}`, {
+//         method: "GET",
+//         headers: {
+//           "Authorization": `Bearer ${token}`,
+//           "Content-Type": "application/json",
+//         },
+//       });
+
+//       if (!response.ok) {
+//         setFullContent("Failed to fetch full content.");
+//         return;
+//       }
+
+//       const data = await response.json();
+//       setFullContent(data.content || "Failed to fetch full content.");
+//     } catch (error) {
+//       setFullContent("Error fetching content.");
+//     }
+//   };
+
+//   const handleSummarize = async () => {
+//     if (!fullContent) {
+//       return;
+//     }
+
+//     setIsSummarizing(true);
+
+//     try {
+//       const summaryResponse = await fetch("http://localhost:5000/summarize", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ text: fullContent }),
+//       });
+
+//       if (!summaryResponse.ok) {
+//         setSummary("Failed to generate summary.");
+//       } else {
+//         const summaryData = await summaryResponse.json();
+//         setSummary(summaryData.summary || "Failed to generate summary.");
+//       }
+//     } catch (error) {
+//       setSummary("Failed to generate summary.");
+//     }
+
+//     setIsSummarizing(false);
+//   };
+
+//   const fetchRecommendations = async () => {
+//     if (!article || !allArticles.length) return;
+
+//     try {
+//       const response = await axios.post("http://localhost:5000/get-recommendations", {
+//         articles: allArticles,
+//         title: article.title,
+//       });
+
+//       setRecommendations(response.data || []);
+//     } catch (error) {
+//       console.error("Error fetching recommendations:", error);
+//     }
+//   };
+
+//   useEffect(() => {
+//     fetchRecommendations();
+//   }, [article, allArticles]);
+
+//   const formatContentAsParagraphs = (content) => {
+//     if (!content) return [];
+
+//     const sentences = content.match(/[^.?!]+[.?!]/g) || [content];
+//     const paragraphs = [];
+//     let tempParagraph = [];
+
+//     sentences.forEach((sentence, index) => {
+//       tempParagraph.push(sentence.trim());
+
+//       if ((index + 1) % 10 === 0 || index === sentences.length - 1) {
+//         paragraphs.push(tempParagraph.join(" "));
+//         tempParagraph = [];
+//       }
+//     });
+
+//     return paragraphs;
+//   };
+
+//   return (
+//     <div>
+//       <h1>{article.title}</h1>
+//       <div>
+//         <img src={article.urlToImage || "default-image.jpg"} alt="News" />
+//         <div>
+//           <p><strong>Author:</strong> {article.author || "Unknown"}</p>
+//           <p><strong>Published At:</strong> {new Date(article.publishedAt).toLocaleDateString()}</p>
+//           <p><strong>Source:</strong> {article.source?.name || "Unknown"}</p>
+//         </div>
+//       </div>
+
+//       <div>
+//         {fullContent
+//           ? formatContentAsParagraphs(fullContent).map((para, index) => (
+//               <p key={index}>{para}</p>
+//             ))
+//           : "Loading full article content..."}
+//       </div>
+
+//       <button onClick={handleSummarize} disabled={isSummarizing}>
+//         {isSummarizing ? "Summarizing..." : "Summarize"}
+//       </button>
+
+//       {summary && (
+//         <p>
+//           <strong>Summary:</strong> {summary}
+//         </p>
+//       )}
+
+//       {/* Display Recommended Articles */}
+//       <div>
+//         <h2>Recommended Articles</h2>
+//         {recommendations.length > 0 ? (
+//           <ul>
+//             {recommendations.map((recArticle, index) => (
+//               <li key={index}>
+//                 <a href={recArticle.url} target="_blank" rel="noopener noreferrer">
+//                   {recArticle.title}
+//                 </a>
+//               </li>
+//             ))}
+//           </ul>
+//         ) : (
+//           <p>No recommendations found.</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }

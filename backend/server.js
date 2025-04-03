@@ -180,6 +180,23 @@ app.post("/summarize", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+//NewsAPI Route
+app.post("/get-recommendations", async (req, res) => {
+  try {
+      const { articles, title } = req.body;
+      if (!articles || !title) {
+          return res.status(400).json({ error: "Missing articles or title" });
+      }
+
+      // Call the Python API for recommendations
+      const response = await axios.post("http://localhost:5001/recommend", { articles, title });
+
+      res.json(response.data);
+  } catch (error) {
+      console.error("Error fetching recommendations:", error);
+      res.status(500).json({ error: "Failed to get recommendations" });
+  }
 });
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
