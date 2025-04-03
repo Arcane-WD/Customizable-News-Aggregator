@@ -8,13 +8,13 @@ export default function TrendingNewsPage() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiUrl =
-      "https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=01b9aacf474d4fd789819e84da3a815b";
+    const apiUrl =  
+      "https://newsapi.org/v2/top-headlines?country=us&apiKey=6599ec9ad7954716bae76c2c1c52e01d";
 
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        setNewsData(data.articles.slice(0, 20)); // Limit to 20 articles
+        setNewsData(data.articles.slice(0, 30));
         setLoading(false);
       })
       .catch((error) => {
@@ -23,24 +23,27 @@ export default function TrendingNewsPage() {
       });
   }, []);
 
-  if (loading) return <div className="loading">Loading...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
+  if (loading) return <div className="trend-loading">Loading...</div>;
+  if (error) return <div className="trend-error">Error: {error}</div>;
 
   return (
-    <div className="news-grid">
-      {newsData.map((article, index) => (
-        <Link to={`/news/${index + 1}`} className="news-card" key={index}>
-          <img
-            src={article.urlToImage || newsImage}
-            alt="newsImage"
-            className="news-img"
-          />
-          <div className="news-content">
-            <h3 className="news-title">{article.title}</h3>
-            <p className="news-description">{article.description}</p>
-          </div>
-        </Link>
-      ))}
+    <div className="trend-news-container">
+      <h3 className="trend-news-heading">Trending News</h3>
+      <div className="trend-news-grid">
+        {newsData.map((article, index) => (
+          <Link to={`/news/${index + 1}`} className="trend-news-card" key={index}>
+            <img
+              src={article.urlToImage || newsImage}
+              alt="news"
+              className="trend-news-img"
+            />
+            <div className="trend-news-content">
+              <h3 className="trend-news-title">{article.title}</h3>
+              <p className="trend-news-description">{article.description}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   );
 }
