@@ -2,7 +2,7 @@ import {jwtDecode} from "jwt-decode";
 import './App.css';
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
-import NewsArticlePage from "./components/pages/NewsArticlePage";
+import NewsArticlePage from "./components/pages/NewsArticlepage";
 import MainNewsPage from "./components/pages/MainNewsPage";
 import ProfilePage from "./components/pages/ProfilePage";
 import PreferencesPage from "./components/pages/PreferencesPage";
