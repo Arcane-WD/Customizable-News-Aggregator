@@ -1,7 +1,6 @@
 # Customizable-News-Aggregator
 ```
 Customizable-News-Aggregator
-├─ .env
 ├─ app
 │  ├─ eslint.config.js
 │  ├─ index.html
@@ -24,23 +23,24 @@ Customizable-News-Aggregator
 │  │  │  │  ├─ Header.jsx
 │  │  │  │  └─ LoadSpinner..jsx
 │  │  │  ├─ DarkMode.jsx
-│  │  │  ├─ news
-│  │  │  │  ├─ FilterBar.jsx
-│  │  │  │  ├─ NewsCard.jsx
-│  │  │  │  └─ TrendingList.jsx
 │  │  │  └─ pages
 │  │  │     ├─ HomePage.jsx
-│  │  │     ├─ LoginPage.jsx
+│  │  │     ├─ SignUpLoginPage.jsx
 │  │  │     ├─ MainNewsPage.jsx
 │  │  │     ├─ NewsArticlepage.jsx
 │  │  │     ├─ NotFoundPage.jsx
 │  │  │     ├─ PreferencesPage.jsx
 │  │  │     ├─ ProfilePage.jsx
-│  │  │     ├─ SignupPage.jsx
-│  │  │     └─ TrendingPage.jsx
+│  │  │     ├─ TrendingPage.jsx
+│  │  │     
 │  │  ├─ index.css
 │  │  └─ main.jsx
 │  └─ vite.config.js
+├─ backend
+|  ├─ server.js (for srapping news article content and for signup/login)
+├─ backend-python
+|  ├─ python.py (for summarization)
+├─ .gitignore
 ├─ notes.md
 └─ README.md
 
