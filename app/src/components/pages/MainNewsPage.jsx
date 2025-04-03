@@ -1,23 +1,23 @@
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import React, { useEffect, useState } from "react";
-import newsImage from "../../assests/images/download.jpg"
-
+import React, { useEffect, useState, useRef } from "react";
+import newsImage from "../../assests/images/download.jpg";
 
 export default function MainNewsPage() {
   const [newsData, setNewsData] = useState([]);
   const location = useLocation();
-
+  const hasFetched = useRef(false); // Prevent multiple API calls
 
   const storedGenres = JSON.parse(localStorage.getItem("selectedGenres")) || [];
-  const selectedGenres = location.state?.selectedGenres || storedGenres; 
+  const selectedGenres = location.state?.selectedGenres || storedGenres;
 
   useEffect(() => {
+    if (hasFetched.current) return; // Prevent re-fetching
+
     const fetchNews = async () => {
-      const apiKey = "408d10cee8cc43fbb7f93fd98356dde7"; // Replace with your News API key
-      
-      let url = ""; // Define url before condition
-  
+      const apiKey = "01b9aacf474d4fd789819e84da3a815b"; // Replace with your News API key
+      let url = "";
+
       if (selectedGenres.length === 0) {
         console.log("No genres selected. Fetching top headlines.");
         url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
@@ -25,28 +25,28 @@ export default function MainNewsPage() {
         const query = selectedGenres.map(keyword => encodeURIComponent(keyword)).join("+");
         url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${apiKey}`;
       }
-  
+
       console.log("Fetching news from:", url);
-  
+
       try {
         const response = await fetch(url);
         const data = await response.json();
-  
+
         if (data.articles) {
-          setNewsData(data.articles); // Store the fetched articles
+          setNewsData(data.articles);
+          hasFetched.current = true; // Mark as fetched
         } else {
           console.error("No articles found:", data);
-          setNewsData([]); // Set empty array if no data
+          setNewsData([]);
         }
       } catch (error) {
         console.error("Error fetching news data:", error);
       }
     };
-  
+
     fetchNews();
-  }, [selectedGenres]); // Depend on selectedGenres
-  
-    
+  }, [selectedGenres]);
+
 
   return (
     <>
