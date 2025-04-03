@@ -56,7 +56,7 @@ export default function MainNewsPage() {
           return (
             <Link
               to={`/news/${globalIndex}`} // Using global index
-              state={{ article }}
+              state={{ article, allArticles: newsData }}
               key={globalIndex}
               className={`newsDiv news-${globalIndex + 1}`}
             >
@@ -80,7 +80,7 @@ export default function MainNewsPage() {
           return (
             <Link
               to={`/news/${globalIndex}`} // Using global index
-              state={{ article }}
+              state={{ article, allArticles: newsData }}
               key={globalIndex}
               className={`newsDiv news-${globalIndex + 1}`}
             >
@@ -104,7 +104,7 @@ export default function MainNewsPage() {
           return (
             <Link
               to={`/news/${globalIndex}`} // Using global index
-              state={{ article }}
+              state={{ article, allArticles: newsData }}
               key={globalIndex}
               className={`newsDiv news-${globalIndex + 1}`}
             >
@@ -128,7 +128,7 @@ export default function MainNewsPage() {
           return (
             <Link
               to={`/news/${globalIndex}`} // Using global index
-              state={{ article }}
+              state={{ article, allArticles: newsData }}
               key={globalIndex}
               className={`newsDiv news-${globalIndex + 1}`}
             >
@@ -152,7 +152,7 @@ export default function MainNewsPage() {
           return (
             <Link
               to={`/news/${globalIndex}`} // Using global index
-              state={{ article }}
+              state={{ article, allArticles: newsData }}
               key={globalIndex}
               className={`newsDiv news-${globalIndex + 1}`}
             >
@@ -176,7 +176,7 @@ export default function MainNewsPage() {
           return (
             <Link
               to={`/news/${globalIndex}`} // Using global index
-              state={{ article }}
+              state={{ article, allArticles: newsData }}
               key={globalIndex}
               className={`newsDiv news-${globalIndex + 1}`}
             >
