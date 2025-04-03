@@ -165,7 +165,7 @@ app.post("/summarize", async (req, res) => {
   }
 
   try {
-    const pythonResponse = await axios.post("http://localhost:5001/summarize", {
+    const pythonResponse = await axios.post("http://localhost:5002/summarize", {
       text,
     });
 
@@ -183,20 +183,25 @@ app.post("/summarize", async (req, res) => {
 //NewsAPI Route
 app.post("/get-recommendations", async (req, res) => {
   try {
-      const { articles, title } = req.body;
-      if (!articles || !title) {
-          return res.status(400).json({ error: "Missing articles or title" });
-      }
+    console.log("🔍 Incoming Request Body:", JSON.stringify(req.body, null, 2));
 
-      // Call the Python API for recommendations
-      const response = await axios.post("http://localhost:5001/recommend", { articles, title });
+    const { articles, title } = req.body;
 
-      res.json(response.data);
+    if (!articles || !title) {
+      return res.status(400).json({ error: "Missing articles or title" });
+    }
+
+    console.log("📤 Sending to Python API:", JSON.stringify({ articles, title }, null, 2));
+
+    const response = await axios.post("http://localhost:5001/recommend", { articles, title });
+    
+    console.log("✅ Response from Python API:", response.data);
+    res.json(response.data);
   } catch (error) {
-      console.error("Error fetching recommendations:", error);
-      res.status(500).json({ error: "Failed to get recommendations" });
+    console.error("❌ Error fetching recommendations:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to get recommendations", details: error.response?.data });
   }
 });
-// app.listen(PORT, () => {
-//   console.log(`Server running on http://localhost:${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
