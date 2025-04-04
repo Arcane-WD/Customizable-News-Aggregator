@@ -141,47 +141,54 @@ export default function NewsArticlePage() {
     fetchRecommendations();
   }, [article, allArticles]);
 
-  // Helper function to decode HTML entities in content
+
   const decodeHtml = (text) =>
     new DOMParser().parseFromString(text, "text/html").documentElement.textContent;
-
-  // Capitalizes the first letter of a sentence
+  
   const capitalizeFirst = (sentence) =>
     sentence.charAt(0).toUpperCase() + sentence.slice(1);
-
-  // Cleans, processes, and splits the article content into readable paragraphs
+  
   const formatContentAsParagraphs = (rawContent) => {
     if (!rawContent) return [];
-
-    // Decode HTML, remove unwanted boilerplate and artifacts
+  
     let content = decodeHtml(rawContent)
-      .replace(/\[\+\d+ chars\]/g, "")               // Remove [+123 chars]
-      .replace(/(read more|click here).*/i, "")      // Remove promotional text
-      .replace(/Published:.*$/i, "")                 // Remove timestamp text
-      .replace(/\s+/g, " ")                          // Normalize whitespace
+      .replace(/\[\+\d+ chars\]/g, "")
+      .replace(/(read more|click here).*/i, "")
+      .replace(/Published:.*$/i, "")
+      .replace(/\s+/g, " ")
       .trim();
-
-    // Use NLP to split content into sentences
+  
     const sentences = nlp(content).sentences().out("array");
-
-    // Group sentences into paragraphs of 8–10 sentences for readability
+  
     const paragraphs = [];
-    let temp = [];
-
-    sentences.forEach((s, index) => {
-      const sentence = capitalizeFirst(s.trim());
-      temp.push(sentence);
-
-      const shouldPush = (index + 1) % (8 + Math.floor(Math.random() * 3)) === 0;
-      if (shouldPush || index === sentences.length - 1) {
-        paragraphs.push(temp.join(" "));
-        temp = [];
+    let currentParagraph = "";
+    let wordLimit = 180; // adjust this for shorter/longer paragraphs
+  
+    for (let sentence of sentences) {
+      sentence = capitalizeFirst(sentence.trim());
+  
+      const temp = currentParagraph + " " + sentence;
+      const wordCount = temp.trim().split(/\s+/).length;
+  
+      if (wordCount > wordLimit) {
+        // Push the current paragraph and start a new one
+        if (currentParagraph.trim()) {
+          paragraphs.push(currentParagraph.trim());
+        }
+        currentParagraph = sentence;
+      } else {
+        currentParagraph = temp;
       }
-    });
-
+    }
+  
+    // Push remaining paragraph
+    if (currentParagraph.trim()) {
+      paragraphs.push(currentParagraph.trim());
+    }
+  
     return paragraphs;
   };
-  // Formatting logic is now complete
+  
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
