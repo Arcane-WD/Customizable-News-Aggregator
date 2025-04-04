@@ -172,7 +172,11 @@ if (!article) {
         />
         <div className="stats text-gray-700">
           <p>
-            <strong>Author:</strong> {article.author || "Unknown"}
+          <strong>Author:</strong> {
+            article.author 
+              ? article.author.split(',')[0].split(' ').slice(0, 2).join(' ') 
+              : "Unknown"
+            }
           </p>
           <p>
             <strong>Published At:</strong>{" "}
