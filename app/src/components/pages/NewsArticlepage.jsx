@@ -1,33 +1,35 @@
+import nlp from "compromise"; // NLP library used for sentence parsing and processing
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function NewsArticlePage() {
   const location = useLocation();
-  const { id } = useParams(); // Retrieve the dynamic parameter from the URL
+  const { id } = useParams(); // Extracts the article ID from the URL (if needed later)
 
-  // console.log("DEBUG: Params ID:", id);
-  // console.log("DEBUG: Location state on load:", location.state);
-
+  // Ensure article data was passed via location.state
   if (!location.state) {
     console.error("DEBUG: No location state found. Article data is missing.");
     return <h2>Article not found</h2>;
   }
 
+  // Destructure the article and allArticles passed through navigation
   const { article, allArticles } = location.state || {};
-  // console.log("Article:", article);
-  // console.log("All Articles:", allArticles); // Should now contain all newsData
 
-if (!article) {
+  // Handle missing article object
+  if (!article) {
     console.error("DEBUG: Article object is undefined in location state.");
     return <div>Article not found!</div>;
   }
 
+  // Local state to store full article content, summary, recommendations, and summarization status
   const [fullContent, setFullContent] = useState(null);
   const [summary, setSummary] = useState(null);
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
 
+  // Fetch the full article content from the backend as soon as the article URL is available
   useEffect(() => {
     console.log("DEBUG: useEffect triggered for fetching full article.");
     if (article?.url) {
@@ -38,16 +40,17 @@ if (!article) {
       setFullContent("No URL available to fetch the full article.");
     }
   }, [article?.url]);
-  
+
+  // Calls backend API to scrape the full article content using its URL
   const fetchFullArticle = async (url) => {
     try {
       const token = localStorage.getItem("authToken");
-  
+
       if (!token) {
         console.error("No token found in localStorage");
         return;
       }
-  
+
       const response = await fetch(`http://localhost:5000/scrape?url=${encodeURIComponent(url)}`, {
         method: "GET",
         headers: {
@@ -55,17 +58,17 @@ if (!article) {
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error Response:", errorData);
         setFullContent("Failed to fetch full content.");
         return;
       }
-  
+
       const data = await response.json();
       console.log("DEBUG: Fetched Data:", data);
-  
+
       if (data.content) {
         setFullContent(data.content);
       } else {
@@ -76,8 +79,8 @@ if (!article) {
       setFullContent("Error fetching content.");
     }
   };
-  
-  
+
+  // Trigger summarization of the full article content using backend API
   const handleSummarize = async () => {
     console.log("DEBUG: Summarize button clicked.");
     if (!fullContent) {
@@ -111,55 +114,74 @@ if (!article) {
     setIsSummarizing(false);
   };
 
-      const fetchRecommendations = async () => {
-      if (!article || !allArticles.length) return;
+  // Sends current article and list of all articles to backend to receive recommendations
+  const fetchRecommendations = async () => {
+    if (!article || !allArticles.length) return;
 
-      console.log("🔍 Sending to Backend:", JSON.stringify({ 
-        articles: allArticles, 
-        title: article.title 
-      }, null, 2));
+    console.log("🔍 Sending to Backend:", JSON.stringify({ 
+      articles: allArticles, 
+      title: article.title 
+    }, null, 2));
 
-      try {
-        const response = await axios.post("http://localhost:5000/get-recommendations", {
-          articles: allArticles,
-          title: article.title,
-        });
+    try {
+      const response = await axios.post("http://localhost:5000/get-recommendations", {
+        articles: allArticles,
+        title: article.title,
+      });
 
-        console.log("✅ Respoooonse from Backend:", response.data);
-        setRecommendations(response.data || []);
-      } catch (error) {
-        console.error("Error fetching recommendations:", error.response?.data || error.message);
-      }
-    };
+      console.log("✅ Respoooonse from Backend:", response.data);
+      setRecommendations(response.data || []);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error.response?.data || error.message);
+    }
+  };
 
+  // Fetch recommendations once the article and all articles are loaded
+  useEffect(() => {
+    fetchRecommendations();
+  }, [article, allArticles]);
 
-    useEffect(() => {
-      fetchRecommendations();
-    }, [article, allArticles]);
+  // Helper function to decode HTML entities in content
+  const decodeHtml = (text) =>
+    new DOMParser().parseFromString(text, "text/html").documentElement.textContent;
 
+  // Capitalizes the first letter of a sentence
+  const capitalizeFirst = (sentence) =>
+    sentence.charAt(0).toUpperCase() + sentence.slice(1);
 
-  // Function to split content into paragraphs every 9-10 sentences
-  const formatContentAsParagraphs = (content) => {
-    if (!content) return [];
+  // Cleans, processes, and splits the article content into readable paragraphs
+  const formatContentAsParagraphs = (rawContent) => {
+    if (!rawContent) return [];
 
-    // Split content into sentences using regex that captures full stops
-    const sentences = content.match(/[^.?!]+[.?!]/g) || [content];
+    // Decode HTML, remove unwanted boilerplate and artifacts
+    let content = decodeHtml(rawContent)
+      .replace(/\[\+\d+ chars\]/g, "")               // Remove [+123 chars]
+      .replace(/(read more|click here).*/i, "")      // Remove promotional text
+      .replace(/Published:.*$/i, "")                 // Remove timestamp text
+      .replace(/\s+/g, " ")                          // Normalize whitespace
+      .trim();
+
+    // Use NLP to split content into sentences
+    const sentences = nlp(content).sentences().out("array");
+
+    // Group sentences into paragraphs of 8–10 sentences for readability
     const paragraphs = [];
-    let tempParagraph = [];
+    let temp = [];
 
-    sentences.forEach((sentence, index) => {
-      tempParagraph.push(sentence.trim());
+    sentences.forEach((s, index) => {
+      const sentence = capitalizeFirst(s.trim());
+      temp.push(sentence);
 
-      // Create a paragraph every 10 sentences or at the end
-      if ((index + 1) % 10 === 0 || index === sentences.length - 1) {
-        paragraphs.push(tempParagraph.join(" "));
-        tempParagraph = [];
+      const shouldPush = (index + 1) % (8 + Math.floor(Math.random() * 3)) === 0;
+      if (shouldPush || index === sentences.length - 1) {
+        paragraphs.push(temp.join(" "));
+        temp = [];
       }
     });
 
-    // console.log("DEBUG: Formatted content into paragraphs:", paragraphs);
     return paragraphs;
   };
+  // Formatting logic is now complete
 
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-md rounded-lg">
@@ -171,20 +193,16 @@ if (!article) {
           className="w-full md:w-1/2 rounded-lg shadow-md"
         />
         <div className="stats text-gray-700">
-          <p>
-          <strong>Author:</strong> {
-            article.author 
-              ? article.author.split(',')[0].split(' ').slice(0, 2).join(' ') 
-              : "Unknown"
-            }
-          </p>
-          <p>
-            <strong>Published At:</strong>{" "}
-            {new Date(article.publishedAt).toLocaleDateString()}
-          </p>
-          <p>
-            <strong>Source:</strong> {article.source?.name || "Unknown"}
-          </p>
+        <p>
+          <strong>Author:</strong> {article.author && article.author.trim() !== "" ? article.author : "Unknown"}
+        </p>
+        <p>
+          <strong>Published At:</strong>{" "}
+          {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : "Invalid Date"}
+        </p>
+        <p>
+          <strong>Source:</strong> {typeof article.source === "string" ? article.source : article.source?.name || "Unknown"}
+      </p>
         </div>
       </div>
 
@@ -218,15 +236,16 @@ if (!article) {
 
       {/* Display Recommended Articles */}
       <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4 border-b-2 pb-2">Recommended Articles</h2>
+        <h2 className="text-xl font-semibold mb-4 border-b-2 pb-2">
+          Recommended Articles
+        </h2>
         {recommendations.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {recommendations.map((recArticle, index) => (
-              <a
+              <Link
                 key={index}
-                href={recArticle.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                to={`/news/recommended-${index}`} // Unique route for recommended articles
+                state={{ article: recArticle, allArticles: allArticles }}
                 className="block bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
               >
                 <img
@@ -238,7 +257,7 @@ if (!article) {
                   <h3 className="text-md font-semibold text-gray-800">{recArticle.title}</h3>
                   <p className="text-sm text-gray-600 mt-2">{recArticle.source || "Unknown Source"}</p>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         ) : (
