@@ -175,4 +175,6 @@ MIT License – Feel free to use and build upon this project!
 ---
 ## Authors
 - [Meer Aakif](https://github.com/meer-aakif-33)
-- [Shujath Nawaz](https://github.com/Arcane-WD)
+- [Harshavardhan](https://github.com/Arcane-WD)
+
+
