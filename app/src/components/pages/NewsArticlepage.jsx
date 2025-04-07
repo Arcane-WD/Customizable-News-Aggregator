@@ -22,7 +22,11 @@ export default function NewsArticlePage() {
     console.error("DEBUG: Article object is undefined in location state.");
     return <div>Article not found!</div>;
   }
-
+  useEffect(() => {
+    // Reset summary when article changes
+    setSummary(null);
+  }, [article]);
+  
   // Local state to store full article content, summary, recommendations, and summarization status
   const [fullContent, setFullContent] = useState(null);
   const [summary, setSummary] = useState(null);

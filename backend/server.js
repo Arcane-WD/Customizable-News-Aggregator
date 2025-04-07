@@ -165,9 +165,15 @@ app.post("/summarize", async (req, res) => {
   }
 
   try {
-    const pythonResponse = await axios.post("http://localhost:5002/summarize", {
-      text,
-    });
+    const pythonResponse = await axios.post(
+      "http://localhost:5002/summarize",
+      { text },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );    
 
     if (pythonResponse.data.summary) {
       res.json({ summary: pythonResponse.data.summary });
