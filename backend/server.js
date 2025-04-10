@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const JWT_SECRET = "aslhbuhbgguhj83rgye76grjhb"; // Replace with a strong secret key
-console.log("JWT_SECRET:", JWT_SECRET);
+//console.log("JWT_SECRET:", JWT_SECRET);
 
 app.use(cors());
 app.use(express.json());
@@ -36,7 +36,7 @@ const writeUsers = (users) => {
 };
 
 app.post("/signup", (req, res) => {
-  console.log("Received data:", req.body);
+  //console.log("Received data:", req.body);
 
   try {
     const { name, email, password } = req.body;
@@ -79,7 +79,7 @@ app.post("/signup", (req, res) => {
 
 
 app.post("/login", (req, res) => {
-  console.log("Login request received:", req.body);
+  //console.log("Login request received:", req.body);
 
   try {
     const { email, password } = req.body;
@@ -189,7 +189,7 @@ app.post("/summarize", async (req, res) => {
 //NewsAPI Route
 app.post("/get-recommendations", async (req, res) => {
   try {
-    console.log("🔍 Incoming Request Body:", JSON.stringify(req.body, null, 2));
+    //console.log("🔍 Incoming Request Body:", JSON.stringify(req.body, null, 2));
 
     const { articles, title } = req.body;
 
@@ -197,7 +197,7 @@ app.post("/get-recommendations", async (req, res) => {
       return res.status(400).json({ error: "Missing articles or title" });
     }
 
-    console.log("📤 Sending to Python API:", JSON.stringify({ articles, title }, null, 2));
+    //console.log("📤 Sending to Python API:", JSON.stringify({ articles, title }, null, 2));
 
     const response = await axios.post("http://localhost:5001/recommend", { articles, title });
     
