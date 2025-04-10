@@ -1,0 +1,17 @@
+{
+  "name": "customizable-news-aggregator",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^8.0.0"
+  },
+"scripts": {
+  "start": "concurrently -n \"FRONTEND,NODE,SUMMARIZE,RECOMMEND\" -c \"cyan,green,magenta,blue\" \"npm run start-frontend\" \"npm run start-node\" \"npm run start-summarize\" \"npm run start-recommend\"",
+
+  "start-frontend": "cd app && npm run dev",
+  "start-node": "cd backend && node server.js",
+  "start-summarize": "run-summarize.bat",
+  "start-recommend": "run-recommend.bat"
+}
+
+}
