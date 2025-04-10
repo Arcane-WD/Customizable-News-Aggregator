@@ -76,57 +76,138 @@ Customizable-News-Aggregator
 
 ---
 
-## 🏗️ Setup & Installation
-
-### 🔧 Prerequisites
-
-- Node.js and npm
-- Python 3.x with required packages (like `transformers`, `sklearn`, etc.)
 
 ---
 
-### 1️⃣ Clone the Repository
+## 🛠️ Setup Instructions (Windows)
+
+### 🔁 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/Customizable-News-Aggregator.git
+git clone https://github.com/<your-username>/Customizable-News-Aggregator.git
 cd Customizable-News-Aggregator
 ```
 
 ---
 
-### 2️⃣ Setup Frontend
+### 📦 2. Install Root Dependencies
+
+```bash
+npm install
+```
+
+---
+
+### 📦 3. Setup React Frontend
 
 ```bash
 cd app
 npm install
-npm run dev
+cd ..
 ```
 
 ---
 
-### 3️⃣ Setup Backend (Node.js)
+### 📦 4. Setup Node.js Backend
 
 ```bash
 cd backend
 npm install
-node server.js
+cd ..
 ```
 
 ---
 
-### 4️⃣ Setup Python Backend
+### 🐍 5. Setup Python Backend
 
-Install required Python packages:
+#### a. Navigate to Python directory:
 
 ```bash
 cd backend-python
-pip install -r requirements.txt  # if available
-python python.py
+```
+
+#### b. Create virtual environment:
+
+```bash
+python -m venv venv
+```
+
+#### c. Activate the environment:
+
+```bash
+venv\Scripts\activate
+```
+
+#### d. Install required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+If `requirements.txt` doesn't exist, you can do:
+
+```bash
+pip install flask pandas
+```
+
+Then export:
+
+```bash
+pip freeze > requirements.txt
+```
+
+#### e. Go back to root:
+
+```bash
+deactivate
+cd ..
 ```
 
 ---
 
-## 🚀 Usage
+### 📄 6. Make Sure These Two Files Exist in Root
+
+#### `run-summarize.bat`
+```bat
+cd backend-python
+call venv\Scripts\activate
+python summarize.py
+```
+
+#### `run-recommend.bat`
+```bat
+cd backend-python
+call venv\Scripts\activate
+python recommend.py
+```
+
+---
+
+### 🚀 7. Start the Entire Project
+
+From the **project root**:
+
+```bash
+npm start
+```
+
+This will run:
+- 🟦 React frontend (http://localhost:5173)
+- 🟩 Node.js backend (http://localhost:5000)
+- 🟪 Python summarize service
+- 🔵 Python recommend service
+
+---
+
+## ✅ Requirements
+
+- Node.js (v16 or above recommended)
+- Python 3.8+
+- Git
+- Windows CMD or PowerShell
+
+---
+
 
 1. Start all three services (frontend, backend, python).
 2. Open the app in your browser (`http://localhost:5173` or Vite's default port).
