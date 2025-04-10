@@ -144,18 +144,6 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-If `requirements.txt` doesn't exist, you can do:
-
-```bash
-pip install flask pandas
-```
-
-Then export:
-
-```bash
-pip freeze > requirements.txt
-```
-
 #### e. Go back to root:
 
 ```bash
@@ -205,15 +193,6 @@ This will run:
 - Python 3.8+
 - Git
 - Windows CMD or PowerShell
-
----
-
-
-1. Start all three services (frontend, backend, python).
-2. Open the app in your browser (`http://localhost:5173` or Vite's default port).
-3. Sign up and set your news preferences.
-4. Browse trending news, read summaries, and check out your personalized feed.
-5. Get intelligent recommendations based on your interactions.
 
 ---
 
