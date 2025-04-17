@@ -32,6 +32,8 @@ export default function NewsArticlePage() {
   const [summary, setSummary] = useState(null);
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
+  const [fakenessScore, setFakenessScore] = useState(null);
+
 
   // Fetch the full article content from the backend as soon as the article URL is available
   useEffect(() => {
@@ -75,6 +77,23 @@ export default function NewsArticlePage() {
 
       if (data.content) {
         setFullContent(data.content);
+        // Trigger fakeness prediction
+        try {
+          const predictionResponse = await fetch("http://localhost:5002/predict-fakeness", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: data.content }),
+          });
+
+          if (predictionResponse.ok) {
+            const prediction = await predictionResponse.json();
+            setFakenessScore(prediction);
+          } else {
+            console.error("Fakeness prediction failed.");
+          }
+        } catch (err) {
+          console.error("Error during fakeness prediction:", err);
+        }
       } else {
         setFullContent("Failed to fetch full content.");
       }
@@ -213,10 +232,12 @@ export default function NewsArticlePage() {
         </p>
         <p>
           <strong>Source:</strong> {typeof article.source === "string" ? article.source : article.source?.name || "Unknown"}
+          {fakenessScore !== null && fakenessScore !== undefined
+          ? `${(fakenessScore * 100).toFixed(1)}% ${fakenessScore > 0.5 ? "(Likely Fake)" : "(Likely Real)"}`
+          : "Not Available"}
       </p>
         </div>
       </div>
-
       {/* Display the formatted content in multiple paragraphs */}
       <div className="mt-4 text-gray-800 article-content">
         {fullContent

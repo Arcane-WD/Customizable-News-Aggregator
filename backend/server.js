@@ -208,6 +208,24 @@ app.post("/get-recommendations", async (req, res) => {
     res.status(500).json({ error: "Failed to get recommendations", details: error.response?.data });
   }
 });
+
+app.post("/predict-fakeness", async (req, res) => {
+  const { text } = req.body;
+
+  if (!text || typeof text !== "string") {
+    return res.status(400).json({ error: "Text content is required." });
+  }
+
+  try {
+    const response = await axios.post("http://localhost:5002/predict", { text });
+    res.json(response.data);
+  } catch (error) {
+    console.error("Prediction error:", error.response?.data || error.message);
+    res.status(500).json({ error: "Failed to predict fakeness." });
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });

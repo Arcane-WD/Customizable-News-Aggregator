@@ -4,5 +4,17 @@
     "name": "sdf",
     "email": "ssssdf@gmail.com",
     "password": "sdf"
+  },
+  {
+    "id": 2,
+    "name": "Harsha",
+    "email": "kjfjh@gmail.com",
+    "password": "esagseg"
+  },
+  {
+    "id": 3,
+    "name": "Amrutha",
+    "email": "amrutha25@gmail.com",
+    "password": "amrutha25"
   }
 ]
