@@ -209,6 +209,7 @@ app.post("/get-recommendations", async (req, res) => {
   }
 });
 
+//predict-fakeness Route
 app.post("/predict-fakeness", async (req, res) => {
   const { text } = req.body;
 
