@@ -79,7 +79,7 @@ export default function NewsArticlePage() {
         setFullContent(data.content);
         // Trigger fakeness prediction
         try {
-          const predictionResponse = await fetch("http://localhost:5002/predict-fakeness", {
+          const predictionResponse = await fetch("http://localhost:5003/predict-fakeness", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: data.content }),
@@ -141,10 +141,10 @@ export default function NewsArticlePage() {
   const fetchRecommendations = async () => {
     if (!article || !allArticles.length) return;
 
-    console.log("🔍 Sending to Backend:", JSON.stringify({ 
-      articles: allArticles, 
-      title: article.title 
-    }, null, 2));
+    // console.log("🔍 Sending to Backend:", JSON.stringify({ 
+    //   articles: allArticles, 
+    //   title: article.title 
+    // }, null, 2));
 
     try {
       const response = await axios.post("http://localhost:5000/get-recommendations", {
@@ -233,7 +233,7 @@ export default function NewsArticlePage() {
         <p>
           <strong>Source:</strong> {typeof article.source === "string" ? article.source : article.source?.name || "Unknown"}
           {fakenessScore !== null && fakenessScore !== undefined
-          ? `${(fakenessScore * 100).toFixed(1)}% ${fakenessScore > 0.5 ? "(Likely Fake)" : "(Likely Real)"}`
+          ? `${(fakenessScore).toFixed(1)}% ${fakenessScore > 50.0 ? "(Likely Fake)" : "(Likely Real)"}`
           : "Not Available"}
       </p>
         </div>

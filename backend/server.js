@@ -201,7 +201,7 @@ app.post("/get-recommendations", async (req, res) => {
 
     const response = await axios.post("http://localhost:5001/recommend", { articles, title });
     
-    console.log("✅ Response from Python API:", response.data);
+    // console.log("✅ Response from Python API:", response.data);
     res.json(response.data);
   } catch (error) {
     console.error("❌ Error fetching recommendations:", error.response?.data || error.message);
@@ -218,7 +218,7 @@ app.post("/predict-fakeness", async (req, res) => {
   }
 
   try {
-    const response = await axios.post("http://localhost:5002/predict", { text });
+    const response = await axios.post("http://localhost:5003/predict-fakeness", { text });
     res.json(response.data);
   } catch (error) {
     console.error("Prediction error:", error.response?.data || error.message);

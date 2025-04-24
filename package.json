@@ -6,12 +6,12 @@
     "concurrently": "^8.0.0"
   },
 "scripts": {
-  "start": "concurrently -n \"FRONTEND,NODE,SUMMARIZE,RECOMMEND\" -c \"cyan,green,magenta,blue\" \"npm run start-frontend\" \"npm run start-node\" \"npm run start-summarize\" \"npm run start-recommend\"",
-
+"start": "concurrently -n \"FRONTEND,NODE,SUMMARIZE,RECOMMEND,FRAUDFLAG\" -c \"cyan,green,magenta,blue\" \"npm run start-frontend\" \"npm run start-node\" \"npm run start-summarize\" \"npm run start-recommend\" \"npm run start-fraudflag\"",
   "start-frontend": "cd app && npm run dev",
   "start-node": "cd backend && node server.js",
   "start-summarize": "run-summarize.bat",
-  "start-recommend": "run-recommend.bat"
+  "start-recommend": "run-recommend.bat",
+  "start-fraudflag": "run-fraudflag.bat"
 }
 
 }

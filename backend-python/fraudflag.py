@@ -2,23 +2,31 @@ from flask import Flask, request, jsonify
 import pickle
 import re
 import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('wordnet')    
+nltk.download('omw-1.4')
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
+text = "Hello, how are you?"
+words = nltk.word_tokenize(text)
+print(words)
+print("CHECK",nltk.data.find('tokenizers/punkt'))
 
+print("CHECKING",nltk.data.find('corpora/stopwords.zip'))
 # Load resources
-model = pickle.load(open(r'C:\Users\harsh\Downloads\FOSS stuff\Customizable-News-Aggregator\backend-python\fraud_model_vectorizer\model.pkl', 'rb'))
-vectorizer = pickle.load(open(r'C:\Users\harsh\Downloads\FOSS stuff\Customizable-News-Aggregator\backend-python\fraud_model_vectorizer\vector.pkl', 'rb'))
+nltk.data.path.append(r'C:\Users\CBIT\Documents\GitHub\Customizable-News-Aggregator\backend-python\myenv\nltk_data')
+model = pickle.load(open(r'C:\Users\CBIT\Documents\GitHub\Customizable-News-Aggregator\backend-python\fraud_model_vectorizer\model.pkl', 'rb'))
+vectorizer = pickle.load(open(r'C:\Users\CBIT\Documents\GitHub\Customizable-News-Aggregator\backend-python\fraud_model_vectorizer\vector.pkl', 'rb'))
 lemmatizer = WordNetLemmatizer()
 stop_words = set(stopwords.words('english'))
+import nltk
 
 # Make sure necessary NLTK packages are downloaded
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
 
 def preprocess(text):
     text = re.sub(r'[^a-zA-Z\s]', '', text)
@@ -46,4 +54,4 @@ def predict():
     })
 
 if __name__ == '__main__':
-    app.run(port=5002)
+    app.run(port=5003)
