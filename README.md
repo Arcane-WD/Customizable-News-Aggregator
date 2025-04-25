@@ -11,7 +11,7 @@ A full-stack **news aggregator application** that delivers **personalized**, **s
 ✅ **User Authentication:** Sign up and log in securely to personalize your news experience.  
 ✅ **Trending News:** Browse the latest trending stories from various sources.  
 ✅ **Personalized Feed:** News based on your selected topics and preferences.  
-✅ **Recommended Articles:** Get smart recommendations based on your reading history.  
+✅ **Recommended Articles:** Get smart recommendations based on your reading.  
 ✅ **Summarized Content:** Clean, AI-powered summaries for faster reading.  
 
 ---
