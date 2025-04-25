@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FaCheckCircle, FaExclamationCircle, FaTimesCircle } from 'react-icons/fa';
 
 export default function NewsArticlePage() {
   const location = useLocation();
