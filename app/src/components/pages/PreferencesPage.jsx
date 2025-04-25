@@ -44,7 +44,8 @@ const NewsGenreSelection = () => {
   
   return (
     <div style={styles.container}>
-      <h1>Choose Your Preferred News Genre</h1>
+      <h2>Choose Your Preferred News Genre</h2>
+      <br />
       <div style={styles.buttonsContainer}>
         {genres.map((genre) => (
           <button
