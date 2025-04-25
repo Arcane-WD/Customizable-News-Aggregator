@@ -1,3 +1,2 @@
-cd backend-python
-call myenv\Scripts\activate
-python summarize.py
+@echo off
+backend-python\myenv\Scripts\python backend-python\summarize.py

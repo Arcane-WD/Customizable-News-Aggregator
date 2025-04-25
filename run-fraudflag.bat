@@ -1,3 +1,2 @@
-cd backend-python
-call myenv\Scripts\activate
-python fraudflag.py
+@echo off
+backend-python\myenv\Scripts\python backend-python\fraudflag.py
