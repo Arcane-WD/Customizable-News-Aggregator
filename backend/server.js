@@ -42,7 +42,7 @@ app.post("/signup", (req, res) => {
     const { name, email, password } = req.body;
     let users = readUsers();
 
-    console.log("Current Users in File:", users);
+    // console.log("Current Users in File:", users);
 
     if (!name || !email || !password) {
       console.log("Validation Failed: Missing fields");
@@ -66,7 +66,7 @@ app.post("/signup", (req, res) => {
     writeUsers(users);
 
     console.log("New user added:", newUser);
-    console.log("Users after adding new user:", users);
+    // console.log("Users after adding new user:", users);
 
     const token = jwt.sign({ id: newUser.id, email: newUser.email }, JWT_SECRET, { expiresIn: "1h" });
 
