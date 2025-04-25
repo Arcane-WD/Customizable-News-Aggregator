@@ -5,7 +5,7 @@ export default function UserProfile() {
     name: localStorage.getItem("userName") || "John Doe",
     email: localStorage.getItem("userEmail") || "john.doe@example.com",
     bio: "Web Developer | Tech Enthusiast | Blogger",
-    profilePicture: "https://via.placeholder.com/150",
+    profilePicture: "https://images.rawpixel.com/image_png_social_square/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png",
   };
 
   return (
