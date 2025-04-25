@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaCheckCircle, FaExclamationCircle, FaTimesCircle } from 'react-icons/fa';
 
 export default function NewsArticlePage() {
   const location = useLocation();
@@ -87,6 +88,7 @@ export default function NewsArticlePage() {
 
           if (predictionResponse.ok) {
             const prediction = await predictionResponse.json();
+            console.log(prediction)
             setFakenessScore(prediction);
           } else {
             console.error("Fakeness prediction failed.");
@@ -231,11 +233,33 @@ export default function NewsArticlePage() {
           {article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : "Invalid Date"}
         </p>
         <p>
-          <strong>Source:</strong> {typeof article.source === "string" ? article.source : article.source?.name || "Unknown"}
-          {fakenessScore !== null && fakenessScore !== undefined
-          ? `${(fakenessScore).toFixed(1)}% ${fakenessScore > 50.0 ? "(Likely Fake)" : "(Likely Real)"}`
-          : "Not Available"}
-      </p>
+        <strong>Source:</strong> {typeof article.source === "string" ? article.source : article.source?.name || "Unknown"}
+        </p>
+        <p>
+          {typeof fakenessScore?.fake_probability === 'number' ? (() => {
+            const prob = fakenessScore.fake_probability;
+            const truePercent = (100 - prob).toFixed(2);
+
+            let categoryLabel = "";
+            let icon = "";
+
+            if (prob < 25) {
+              categoryLabel = "(Very Likely Real)";
+              icon = "✅"; // green checkmark
+            } else if (prob >= 25 && prob < 50) {
+              categoryLabel = "(Likely Real)";
+              icon = "🟢"; // green circle
+            } else if (prob >= 50 && prob <= 70) {
+              categoryLabel = "(Likely Fake)";
+              icon = "🟠"; // orange circle
+            } else {
+              categoryLabel = "(Very Likely Fake)";
+              icon = "❌"; // red cross
+            }
+
+            return `${icon} Article content is ${truePercent}% True ${categoryLabel}`;
+          })() : "Not Available"}
+        </p>
         </div>
       </div>
       {/* Display the formatted content in multiple paragraphs */}
