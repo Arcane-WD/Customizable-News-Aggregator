@@ -38,11 +38,6 @@ def summarize():
             print("Invalid or missing text.")
             return jsonify({"error": "Valid text parameter is required."}), 400
 
-        # Token-based check (more accurate than character count)
-        if len(tokenizer.encode(text, truncation=False)) > 4096:
-            print("Text too long (token limit).")
-            return jsonify({"error": "Text is too long for summarization model."}), 400
-
         chunks = split_into_chunks(text)
         print(f"Text split into {len(chunks)} chunks.")
 
