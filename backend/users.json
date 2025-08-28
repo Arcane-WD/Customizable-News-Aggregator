@@ -46,5 +46,20 @@
     "name": "Aakif Ahmad Mir",
     "email": "aakiiiff@gmail.com",
     "password": "vcjmn nb "
+<<<<<<< HEAD
+=======
+  },
+  {
+    "id": 9,
+    "name": "Aakif Ahmad Mir",
+    "email": "aakifoffaal@gmail.com",
+    "password": "asd"
+  },
+  {
+    "id": 10,
+    "name": "Aakif Ahmad Mir",
+    "email": "aakifofial@gmail.com",
+    "password": "wwwwwwww"
+>>>>>>> b144ea5254ed450ec1235c867510fef0ecb696f0
   }
 ]
